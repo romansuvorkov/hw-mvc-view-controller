@@ -6,7 +6,7 @@
     <body>
     <p>Доступные товары</p>
         @forelse($products as $product)
-            <p><a href=" {{ route('products.show', $product) }}">{{$product->productType->name}} с начинкой {{$product->filling}}</a></p>
+            <p>{{$product->productType->name}} с начинкой {{$product->filling}} Цена: {{$product->price}} руб./шт.</p>
         @empty
         @endforelse
     </br></br>
