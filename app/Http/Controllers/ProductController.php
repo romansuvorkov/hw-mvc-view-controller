@@ -51,7 +51,7 @@ class ProductController extends Controller
 
     /**
      * Display the specified resource.
-//     * @param $id
+     * @param $id
      * @param ProductService $productService
      * @return \Illuminate\Http\Response
      */
