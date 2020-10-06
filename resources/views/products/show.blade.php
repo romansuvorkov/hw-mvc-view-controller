@@ -4,9 +4,9 @@
     <p>Начинка: {{$product->filling}}</p>
     <p>Цена: {{$product->price}}</p>
 </div>
-<form action="{{ route('products.destroy', $product) }}" method="POST" style="display: flex; flex-direction: column">
+<form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: flex; flex-direction: column">
     @csrf
     @method('DELETE')
     <button type="submit">Удалить</button>
 </form>
-<p><a href="{{ route('products.edit', $product) }}">Изменить</a></p>
+<p><a href="{{ route('products.edit', $product->id) }}">Изменить</a></p>

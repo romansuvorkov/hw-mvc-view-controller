@@ -1,7 +1,7 @@
 <p><a href="{{ route('products.index') }}">Назад</a></p>
 <p>Добавить товар</p>
 
-<form action="{{ route('products.store', $product) }}" method="POST" style="display: flex; flex-direction: column">
+<form action="{{ route('products.store') }}" method="POST" style="display: flex; flex-direction: column">
     @csrf
     <label for="type_id">
         Тип ID

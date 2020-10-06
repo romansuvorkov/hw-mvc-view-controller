@@ -1,7 +1,7 @@
 <p><a href="{{ route('products.index') }}">Назад</a></p>
 <p>Добавить товар</p>
 
-<form action="{{ route('products.update', $product) }}" method="POST" style="display: flex; flex-direction: column">
+<form action="{{ route('products.update', $product->id) }}" method="POST" style="display: flex; flex-direction: column">
     @csrf
     @method('PATCH')
     <label for="type_id">

@@ -2,20 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\StoreCategory;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Services\ProductService;
+
 
 class ProductController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
+     *
+     * @param ProductService $productService
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ProductService $productService)
     {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        return view('products.index', [
+            'products' => $productService->all(),
+        ]);
     }
 
     /**
@@ -31,44 +38,40 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     * @param StoreCategory $store
+     * @param ProductService $productService
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, StoreCategory $store, ProductService $productService)
     {
-
-        $validated = $request->validate([
-            'filling' => 'required|string',
-            'price' => 'required|integer',
-            'type_id' => 'required|integer',
-        ],[
-            'required' => 'Поле :attribute обязательно для заполнения',
-            'integer' => 'Данные в :attribute должны быть числом',
-        ]);
-
-        Product::create($validated);
+        $validated = $request->validate($store->rules(),$store->messages());
+        $productService->create($validated);
         return redirect()->route('products.index');
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
+     * @param $id
+     * @param ProductService $productService
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id, ProductService $productService)
     {
+        $product= $productService->find($id);
         return view('products.show', compact('product'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param $id
+     * @param ProductService $productService
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id, ProductService $productService)
     {
+        $product= $productService->find($id);
         return view('products.edit', compact('product'));
     }
 
@@ -76,32 +79,28 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param ProductService $productService
+     * @param StoreCategory $store
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update($id, Request $request, ProductService $productService, StoreCategory $store)
     {
-        $validated = $request->validate([
-            'filling' => 'required|string',
-            'price' => 'required|integer',
-            'type_id' => 'required|integer',
-        ],[
-            'required' => 'Поле :attribute обязательно для заполнения',
-            'integer' => 'Данные в :attribute должны быть числом',
-        ]);
-        $product->update($validated);
+        $validated = $request->validate($store->rules(),$store->messages());
+        $productService->update($id, $validated);
         return redirect()->route('products.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param $id
+     * @param ProductService $productService
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id, ProductService $productService)
     {
-        $product->delete();
+        $productService->destroy($id);
         return redirect()->route('products.index');
     }
 }
