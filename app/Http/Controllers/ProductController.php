@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Category\StoreCategory;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
 
@@ -52,7 +51,7 @@ class ProductController extends Controller
 
     /**
      * Display the specified resource.
-     * @param $id
+//     * @param $id
      * @param ProductService $productService
      * @return \Illuminate\Http\Response
      */

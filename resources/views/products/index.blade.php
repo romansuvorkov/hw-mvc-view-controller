@@ -4,7 +4,6 @@
         <title>@yield('title')</title>
     </head>
     <body>
-    <p>Список товаров</p>
     <p><a href="{{route('products.create')}}">Добавить</a></p>
         @section('sidebar')
             <p>Список товаров</p>
